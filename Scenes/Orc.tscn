@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/tiles/0x72_16x16DungeonTileset.v4.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Orc.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/States.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Idle.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.87857, 7.59599 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 119.259
+
+[node name="Orc" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="texture" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 18, 161, 12, 15 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.203903, 0 )
+shape = SubResource( 1 )
+
+[node name="States" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Idle" type="Node2D" parent="States"]
+script = ExtResource( 4 )
+
+[node name="Sensing" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensing"]
+shape = SubResource( 2 )
+[connection signal="body_entered" from="Sensing" to="." method="_on_Sensing_body_entered"]
+[connection signal="body_exited" from="Sensing" to="." method="_on_Sensing_body_exited"]
