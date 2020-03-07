@@ -5,7 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
-
+var is_moving = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -22,7 +22,9 @@ func _process(delta):
 		direction += Vector2.LEFT
 	if Input.is_action_pressed("ui_right"):
 		direction += Vector2.RIGHT
-		
+	
+	is_moving = not direction == Vector2.ZERO
+	
 	$hero.flip_h = direction.x <0
 	move_and_slide(direction*100)
 	

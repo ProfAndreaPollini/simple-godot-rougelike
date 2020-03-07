@@ -1,4 +1,4 @@
-extends Node2D
+extends "res://utils/State.gd"
 
 var state_name = "Idle"
 
@@ -9,9 +9,25 @@ var state_name = "Idle"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	set_physics_process(false)
+	set_process(false)
+	set_process_input(false)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func enter():
+	
+	
+	return
+
+func exit():
+	return
+
+func handle_input(event):
+	return
+
+func update(delta):
+	return
+
+func _on_animation_finished(anim_name):
+	return

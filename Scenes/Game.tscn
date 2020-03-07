@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Game.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://assets/bg.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/Sword.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Orc.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Navigation2D.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/map.gd" type="Script" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "icon.png 0"
@@ -68,6 +70,10 @@ polygon = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 [sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 
+[sub_resource type="NavigationPolygon" id=8]
+vertices = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
 [sub_resource type="TileSet" id=5]
 0/name = "wall.png 0"
 0/texture = ExtResource( 3 )
@@ -86,6 +92,17 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
+1/name = "floor1"
+1/texture = ExtResource( 4 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 80, 0, 16, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/navigation = SubResource( 8 )
+1/shapes = [  ]
+1/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 4.7113, 7.0253 )
@@ -99,16 +116,24 @@ scale = Vector2( 2.18674, 2 )
 texture = ExtResource( 7 )
 
 [node name="Level" type="TileMap" parent="."]
+visible = false
 tile_set = SubResource( 1 )
 format = 1
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 anims/fade_out_level_intro = SubResource( 2 )
 
-[node name="map" type="TileMap" parent="."]
+[node name="Navigation2D" type="Navigation2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="map" type="TileMap" parent="Navigation2D"]
 tile_set = SubResource( 5 )
 cell_size = Vector2( 16, 16 )
 format = 1
+script = ExtResource( 11 )
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 4.0
 
 [node name="heroBody" type="KinematicBody2D" parent="." groups=[
 "hero",

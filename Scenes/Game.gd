@@ -2,6 +2,8 @@ extends Node2D
 
 var Room = load("res://entity/Room.gd")
 
+onready var map = $Navigation2D/map
+
 func create_2d_array(width, height, value):
 	var a = []
 
@@ -125,6 +127,9 @@ export var ROOM_SIZE:int = 16
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+	
+	Events.game = self
+	
 	level_size = Vector2(5,5)
 	roomsGrid = create_2d_array(level_size.x,level_size.y,null)
 	create_rooms_grid(5)
@@ -146,29 +151,32 @@ func _ready():
 				print(current_room.x," ",current_room.y," - ",current_room.kind," ",current_room.variant)
 				var doors = current_room.kind #get_doors_by_room(roomsGrid[y][x])
 				for j in range(ROOM_SIZE):
-					$map.set_cell(x*ROOM_SIZE+j,y*ROOM_SIZE,0)
-					$map.set_cell(x*ROOM_SIZE+j,(y+1)*ROOM_SIZE-1,0)
+					map.set_cell(x*ROOM_SIZE+j,y*ROOM_SIZE,0)
+					map.set_cell(x*ROOM_SIZE+j,(y+1)*ROOM_SIZE-1,0)
 				for i in range(ROOM_SIZE):
-					$map.set_cell(x*ROOM_SIZE,y*ROOM_SIZE+i,0)
-					$map.set_cell((x+1)*ROOM_SIZE-1,y*ROOM_SIZE+i,0)
+					map.set_cell(x*ROOM_SIZE,y*ROOM_SIZE+i,0)
+					map.set_cell((x+1)*ROOM_SIZE-1,y*ROOM_SIZE+i,0)
+				for j in range(1,ROOM_SIZE-1):
+					for i in range(1,ROOM_SIZE-1):
+						map.set_cell(x*ROOM_SIZE+j,y*ROOM_SIZE+i,1)
 				var room_center = ROOM_SIZE/2
 				
 				if doors[0]: # porta UP
 					print("UP WALL")
 					for k in range(-2,3):
-						$map.set_cell(x*ROOM_SIZE+k + room_center,y*ROOM_SIZE,-1)
+						map.set_cell(x*ROOM_SIZE+k + room_center,y*ROOM_SIZE,1)
 				if doors[1]: # porta DOWN TODO
 					print("DOWN WALL")
 					for k in range(-2,3):
-						$map.set_cell(x*ROOM_SIZE+k + room_center,(y+1)*ROOM_SIZE-1,-1)
+						map.set_cell(x*ROOM_SIZE+k + room_center,(y+1)*ROOM_SIZE-1,1)
 				if doors[2]: # porta LEFT TODO
 					print("LEFT WALL")
 					for k in range(-2,3):
-						$map.set_cell(x*ROOM_SIZE,y*ROOM_SIZE+k + room_center,-1)
+						map.set_cell(x*ROOM_SIZE,y*ROOM_SIZE+k + room_center,1)
 				if doors[3]: # porta RIGHT TODO
 					print("RIGHT WALL")
 					for k in range(-2,3):
-						$map.set_cell((x+1)*ROOM_SIZE-1,y*ROOM_SIZE+k + room_center,-1)
+						map.set_cell((x+1)*ROOM_SIZE-1,y*ROOM_SIZE+k + room_center,1)
 
 	var start_pos = Vector2(16*rooms[0].x*ROOM_SIZE, 16*rooms[0].y*ROOM_SIZE) + Vector2(16*ROOM_SIZE/2,16*ROOM_SIZE/2)
 	var orc_room = 1+ randi() % (len(rooms)-1)
@@ -176,7 +184,22 @@ func _ready():
 	$heroBody.global_position = start_pos
 	$Orc.global_position = orc_pos
 	
+	Events.emit_signal("map_generation_end",start_pos)
+	#for cell in $map.get_used_cells():
+	#	print($map.get_cellv(cell))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
+func _unhandled_input(event: InputEvent) -> void:
 	
+	if not event is InputEventMouseButton:
+		return
+	print(event.button_index, ' ', event.is_pressed())
+	if event.button_index != BUTTON_LEFT or not event.is_pressed():
+		return
+	print(event)
+	var new_path = $Navigation2D.get_simple_path($heroBody.global_position,$Orc.global_position)
+	$Line2D.points = new_path
+	
+func _process(delta):
+	pass
 	

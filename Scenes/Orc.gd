@@ -11,6 +11,8 @@ var last_pos
 func _ready():
 	randomize()
 	last_pos = global_position
+	$States.active = true
+	$States.start()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,8 +29,8 @@ func _process(delta):
 			# move on hit
 			var d  = global_position - collision.collider.global_position
 			#global_position  =  global_position + d
-			print("normal = ",collision.normal)
-			move_and_collide(5*collision.normal*60)
+			#print("normal = ",collision.normal)
+			move_and_collide(5*collision.normal*20)
 			
 				
 			blood.global_position = global_position
@@ -42,6 +44,7 @@ func _process(delta):
 
 func _on_Sensing_body_entered(body):
 	if body.is_in_group("hero"):
+		$States._change_state('Attack')
 		print("Hero is near!")
 
 
