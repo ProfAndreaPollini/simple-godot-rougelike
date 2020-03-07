@@ -27,9 +27,9 @@ func _process(delta):
 			# move on hit
 			var d  = global_position - collision.collider.global_position
 			#global_position  =  global_position + d
-			var collision2 = move_and_collide(5*d*60)
-			if collision2:
-				print("r = ",collision2.remainder)
+			print("normal = ",collision.normal)
+			move_and_collide(5*collision.normal*60)
+			
 				
 			blood.global_position = global_position
 			var dir = (global_position - collision.collider.global_position).normalized()

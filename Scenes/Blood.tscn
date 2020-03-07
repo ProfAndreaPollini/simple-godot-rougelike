@@ -1,22 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="ParticlesMaterial" id=1]
-lifetime_randomness = 0.27
-emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 1 )
-flag_disable_z = true
-direction = Vector3( 1, 1, 0 )
-spread = 15.34
-flatness = 0.13
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 22.73
-initial_velocity_random = 0.62
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-linear_accel = 1.14
-damping = 20.45
-damping_random = 0.48
-color = Color( 0.952941, 0.0509804, 0.0509804, 1 )
+[ext_resource path="res://assets/particles/Blood.tres" type="Material" id=1]
 
 [node name="Blood" type="Particles2D"]
 scale = Vector2( 5, 5 )
@@ -27,4 +11,4 @@ one_shot = true
 speed_scale = 4.55
 explosiveness = 0.47
 randomness = 0.05
-process_material = SubResource( 1 )
+process_material = ExtResource( 1 )
