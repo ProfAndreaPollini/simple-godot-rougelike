@@ -152,11 +152,11 @@ func _ready():
 				print(current_room.x," ",current_room.y," - ",current_room.kind," ",current_room.variant)
 				var doors = current_room.kind #get_doors_by_room(roomsGrid[y][x])
 				for j in range(ROOM_SIZE):
-					map.set_cell(x*ROOM_SIZE+j,y*ROOM_SIZE,0)
-					map.set_cell(x*ROOM_SIZE+j,(y+1)*ROOM_SIZE-1,0)
+					map.set_cell(x*ROOM_SIZE+j,y*ROOM_SIZE,6)
+					map.set_cell(x*ROOM_SIZE+j,(y+1)*ROOM_SIZE-1,6)
 				for i in range(ROOM_SIZE):
-					map.set_cell(x*ROOM_SIZE,y*ROOM_SIZE+i,0)
-					map.set_cell((x+1)*ROOM_SIZE-1,y*ROOM_SIZE+i,0)
+					map.set_cell(x*ROOM_SIZE,y*ROOM_SIZE+i,6)
+					map.set_cell((x+1)*ROOM_SIZE-1,y*ROOM_SIZE+i,6)
 				for j in range(1,ROOM_SIZE-1):
 					for i in range(1,ROOM_SIZE-1):
 						map.set_cell(x*ROOM_SIZE+j,y*ROOM_SIZE+i,1)
@@ -183,7 +183,7 @@ func _ready():
 	var orc_room = 1+ randi() % (len(rooms)-1)
 	var orc_pos = 	Vector2(16*rooms[orc_room].x*ROOM_SIZE, 16*rooms[orc_room].y*ROOM_SIZE) + Vector2(16*ROOM_SIZE/2,16*ROOM_SIZE/2)		
 	$heroBody.global_position = start_pos
-	$Orc.global_position = orc_pos
+	$OrcShamanEntity.global_position = orc_pos
 	
 	Events.emit_signal("map_generation_end",start_pos)
 	
