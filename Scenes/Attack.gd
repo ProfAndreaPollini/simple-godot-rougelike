@@ -32,7 +32,7 @@ func enter():
 	path = navigator.get_simple_path(me.global_position,hero.global_position,false)
 
 	
-	print(hero)
+	#print(hero)
 	
 
 func exit():
@@ -47,6 +47,9 @@ func handle_input(event):
 
 
 func update(delta):
+	if me.is_hit:
+		#print("hit state, nothing to do")
+		return
 	var distance = v * delta
 	var start_point = me.global_position
 	#for i in range(len(path)):

@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/States.gd" type="Script" id=1]
+[ext_resource path="res://entity/IdleState.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Entity.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[node name="Entity" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+
+[node name="States" type="Node2D" parent="."]
+script = ExtResource( 1 )
+active = true
+
+[node name="Idle" type="Node2D" parent="States"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="UI" type="Control" parent="."]
+margin_right = 16.0
+margin_bottom = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="health" type="ProgressBar" parent="UI"]
+margin_right = 4.0
+margin_bottom = 14.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}

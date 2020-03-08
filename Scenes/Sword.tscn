@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://assets/tiles/0x72_16x16DungeonTileset.v4.png" type="Texture" id=1]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6.39774, 1.92956 )
 
 [node name="Sword" type="KinematicBody2D" groups=[
 "weapons",
@@ -16,6 +13,5 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 116, 42, 8, 21 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -22.7325, -0.231964 )
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -29.1277, -0.98341, -27.9679, -2.14323, -16.4856, -2.14323, -16.3697, -4.23091, -14.6299, -4.11493, -13.4701, -1.91127, -9.75869, -1.79528, -9.06279, -0.519482, -9.17877, 0.292393, -10.5706, 1.45221, -13.934, 1.5682, -14.05, 2.61203, -14.9779, 3.07596, -16.2537, 3.42391, -16.2537, 1.5682, -28.0839, 1.5682, -29.1277, 0.756321 )

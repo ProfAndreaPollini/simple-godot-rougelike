@@ -25,7 +25,13 @@ func _process(delta):
 	
 	is_moving = not direction == Vector2.ZERO
 	
-	$hero.flip_h = direction.x <0
+	if is_moving:
+		$AnimatedSprite.play("run")
+	else:
+		$AnimatedSprite.play("idle")
+		
+	$AnimatedSprite.flip_h = direction.x <0
+	#$hero.flip_h = direction.x <0
 	move_and_slide(direction*100)
 	
 	#position sword

@@ -1,6 +1,7 @@
 extends Node2D
 
 var Room = load("res://entity/Room.gd")
+var EntityDamageUI = preload("res://UI/EntityDamageUI.tscn")
 
 onready var map = $Navigation2D/map
 
@@ -185,6 +186,17 @@ func _ready():
 	$Orc.global_position = orc_pos
 	
 	Events.emit_signal("map_generation_end",start_pos)
+	
+	
+	## connect events
+	Events.connect("hit",self,"on_hit")
+	
+func on_hit(entity):
+	print("hit: ",entity)	
+	var damage_ui = EntityDamageUI.instance()
+	damage_ui.set_global_position(entity.global_position)
+	add_child(damage_ui)
+	damage_ui.start()
 	#for cell in $map.get_used_cells():
 	#	print($map.get_cellv(cell))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -193,10 +205,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if not event is InputEventMouseButton:
 		return
-	print(event.button_index, ' ', event.is_pressed())
+	#print(event.button_index, ' ', event.is_pressed())
 	if event.button_index != BUTTON_LEFT or not event.is_pressed():
 		return
-	print(event)
+	#print(event)
 	var new_path = $Navigation2D.get_simple_path($heroBody.global_position,$Orc.global_position)
 	$Line2D.points = new_path
 	

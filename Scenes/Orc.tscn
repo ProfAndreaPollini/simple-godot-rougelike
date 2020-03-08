@@ -33,6 +33,7 @@ script = ExtResource( 4 )
 [node name="Sensing" type="Area2D" parent="States/Idle"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="States/Idle/Sensing"]
+visible = false
 shape = SubResource( 2 )
 
 [node name="Attack" type="Node2D" parent="States"]
@@ -40,6 +41,33 @@ script = ExtResource( 5 )
 
 [node name="Timer" type="Timer" parent="States/Attack"]
 one_shot = true
+
+[node name="Control" type="Control" parent="."]
+margin_left = -19.0
+margin_top = 13.0
+margin_right = 21.0
+margin_bottom = 21.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+anchor_left = 0.478
+anchor_top = -1.655
+anchor_right = 0.478
+anchor_bottom = -1.655
+margin_left = -8.15553
+margin_top = 10.3921
+margin_right = 71.8445
+margin_bottom = 24.3921
+rect_min_size = Vector2( 80, 10 )
+rect_scale = Vector2( 0.2, 0.2 )
+step = 1.0
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="States/Idle/Sensing" to="States" method="_on_Sensing_body_entered"]
 [connection signal="body_exited" from="States/Idle/Sensing" to="States" method="_on_Sensing_body_exited"]
 [connection signal="timeout" from="States/Attack/Timer" to="States/Attack" method="_on_Timer_timeout"]

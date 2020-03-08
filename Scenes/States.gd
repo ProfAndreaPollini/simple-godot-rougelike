@@ -1,5 +1,6 @@
 extends Node2D
 
+signal state_changed(previous,current)
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -16,7 +17,7 @@ export(bool) var active = false setget set_active
 func _ready():
 	for state in get_children():
 		state.connect('finished',self,"_on_change_state")
-		states[state.state_name.to_upper()] = state
+		states[state.get_name().to_upper()] = state
 		
 	
 	states_stack.push_front(get_child(0))
@@ -56,7 +57,7 @@ func _change_state(state_name):
 		states_stack.pop_front()
 	else:
 		states_stack[0] = states[state_name]
-	print("CHANGE STATE: ",current_state.state_name, " -> ",states_stack[0].state_name)
+	#print("CHANGE STATE: ",current_state.state_name, " -> ",states_stack[0].state_name)
 	current_state = states_stack[0]
 	emit_signal("state_changed", current_state)
 	current_state.enter()
